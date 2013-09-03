@@ -10,6 +10,7 @@ describe 'nova::scheduler::filter' do
   it { should contain_nova_config('DEFAULT/max_io_ops_per_host').with_value('8') }
   it { should contain_nova_config('DEFAULT/max_instances_per_host').with_value('50') }
   it { should contain_nova_config('DEFAULT/ram_allocation_ratio').with_value('1.5') }
+  it { should contain_nova_config('DEFAULT/reserved_host_memory_mb').with_value('0') }
   it { should contain_nova_config('DEFAULT/scheduler_available_filters').with_value('nova.scheduler.filters.all_filters') }
   it { should contain_nova_config('DEFAULT/scheduler_weight_classes').with_value('nova.scheduler.weights.all_weighers') }
 

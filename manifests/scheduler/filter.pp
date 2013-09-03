@@ -5,31 +5,32 @@
 # === Parameters:
 #
 # ==== Options defined in nova.scheduler.driver
-# scheduler_host_manager: The scheduler host manager class to use
-# scheduler_max_attempts: Maximum number of attempts to schedule an instance
+# scheduler_host_manager:  The scheduler host manager class to use
+# scheduler_max_attempts:  Maximum number of attempts to schedule an instance
 
 # ==== Options defined in nova.scheduler.filter_scheduler
 # scheduler_host_subset_size: defines the subset size that a host is chosen from
 
 # ==== Options defined in nova.scheduler.filters.core_filter
-# cpu_allocation_ratio:   Virtual CPU to Physical CPU allocation ratio (float)
+# cpu_allocation_ratio:    Virtual CPU to Physical CPU allocation ratio (float)
 
 # ==== Options defined in nova.scheduler.filters.disk_filter
-# disk_allocation_ratio:  Virtual disk to physical disk allocation ratio (float)
+# disk_allocation_ratio:   Virtual disk to physical disk allocation ratio (float)
 
 # ==== Options defined in nova.scheduler.filters.io_ops_filter
-# max_io_ops_per_host:    Ignore hosts that have too many builds/resizes
-#                         /snaps/migrations (Int)
+# max_io_ops_per_host:     Ignore hosts that have too many builds/resizes
+#                          /snaps/migrations (Int)
 
 # ==== Options defined in nova.scheduler.filters.isolated_hosts_filter
 # isolated_images: Images to run on isolated host (list value)
 # isolated_hosts:  Host reserved for specific images (list value)
 
 # ==== Options defined in nova.scheduler.filters.num_instances_filter
-# max_instances_per_host: Ignore hosts that have too many instances (Int)
+# max_instances_per_host:  Ignore hosts that have too many instances (Int)
 
 # ==== Options defined in nova.scheduler.filters.ram_filter
-# ram_allocation_ratio:   Virtual ram to physical ram allocation ratio (Int)
+# ram_allocation_ratio:    Virtual ram to physical ram allocation ratio (Int)
+# reserved_host_memory_mb: Amount of memory in MB to reserve for the host
 
 # ==== Options defined in nova.scheduler.host_manager
 # scheduler_available_filters
@@ -45,6 +46,7 @@ class nova::scheduler::filter (
   $max_io_ops_per_host          = '8',
   $max_instances_per_host       = '50',
   $ram_allocation_ratio         = '1.5',
+  $reserved_host_memory_mb      = false,
   $isolated_images              = false,
   $isolated_hosts               = false,
   $scheduler_available_filters  = 'nova.scheduler.filters.all_filters',
@@ -87,6 +89,15 @@ class nova::scheduler::filter (
   }  else {
     nova_config {
       'DEFAULT/isolated_hosts':    ensure => absent
+    }
+  }
+  if ($reserved_host_memory_mb) {
+    nova_config {
+      'DEFAULT/reserved_host_memory_mb':    value => $reserved_host_memory_mb
+    }
+  }  else {
+    nova_config {
+      'DEFAULT/reserved_host_memory_mb':    ensure => absent
     }
   }
 }
