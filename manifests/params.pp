@@ -21,6 +21,7 @@ class nova::params {
       $volume_package_name          = 'openstack-nova-volume'
       $vncproxy_package_name        = 'openstack-nova-novncproxy'
       $spicehtml5proxy_package_name = 'openstack-nova-console'
+      $baremetal_package_name       = 'openstack-nova-baremetal'
       # service names
       $api_service_name             = 'openstack-nova-api'
       $cert_service_name            = 'openstack-nova-cert'
@@ -63,6 +64,7 @@ class nova::params {
       $scheduler_package_name       = 'nova-scheduler'
       $tgt_package_name             = 'tgt'
       $volume_package_name          = 'nova-volume'
+      $baremetal_package_name       = 'nova-baremetal'
       # service names
       $api_service_name             = 'nova-api'
       $cert_service_name            = 'nova-cert'
