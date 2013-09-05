@@ -2,19 +2,19 @@
 class nova::compute::baremetal (
   $db_type = 'sqlite',
   $db_host = undef,
-  $nova_db_dbname = '/var/lib/nova/nova.sqlite',
-  $nova_db_user = undef,
-  $nova_db_password = undef,
+  $nova_bm_db_dbname = '/var/lib/nova/nova.sqlite',
+  $nova_bm_db_user = undef,
+  $nova_bm_db_password = undef,
 ) {
 
   include nova::params
 
   case $db_type {
     'sqlite':          {
-        $sql_connection = "sqlite://${nova_db_dbname}"
+        $sql_connection = "sqlite://${nova_bm_db_dbname}"
     }
     default:            {
-        $sql_connection = "${db_type}://${nova_db_user}:${nova_db_password}@${db_host}/${nova_db_dbname}"
+        $sql_connection = "${db_type}://${nova_bm_db_user}:${nova_bm_db_password}@${db_host}/${nova_bm_db_dbname}"
     }
   }
 
