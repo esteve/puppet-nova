@@ -5,6 +5,7 @@ class nova::compute::baremetal (
   $nova_bm_db_dbname = '/var/lib/nova/nova.sqlite',
   $nova_bm_db_user = undef,
   $nova_bm_db_password = undef,
+  $power_manager = undef,
 ) {
 
   include nova::params
@@ -26,5 +27,15 @@ class nova::compute::baremetal (
   package { 'nova-baremetal':
     name   => $::nova::params::baremetal_package_name,
     ensure => present,
+  }
+
+  if ($power_manager) {
+    nova_config {
+      'baremetal/power_manager':    value => $power_manager
+    }
+  }  else {
+    nova_config {
+      'baremetal/power_manager':    ensure => absent
+    }
   }
 }
