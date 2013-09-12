@@ -10,6 +10,8 @@ class nova::compute::baremetal (
   $power_manager = 'nova.virt.baremetal.ipmi.IPMI',
   $driver = 'nova.virt.baremetal.pxe.PXE',
   $instance_type_extra_specs = 'cpu_arch:{i386|x86_64}',
+  $enabled = true,
+  $ensure_package = 'present',
 ) {
 
   include nova::params
@@ -31,5 +33,12 @@ class nova::compute::baremetal (
   package { 'nova-baremetal':
     name   => $::nova::params::baremetal_package_name,
     ensure => present,
+  }
+
+  nova::generic_service { 'baremetal':
+    enabled        => $enabled,
+    ensure_package => $ensure_package,
+    package_name   => $::nova::params::baremetal_package_name,
+    service_name   => $::nova::params::baremetal_service_name,
   }
 }
