@@ -6,6 +6,10 @@ class nova::compute::baremetal (
   $nova_bm_db_user = undef,
   $nova_bm_db_password = undef,
   $power_manager = undef,
+  $tftp_root = /tftpboot,
+  $power_manager = 'nova.virt.baremetal.ipmi.IPMI',
+  $driver = 'nova.virt.baremetal.pxe.PXE',
+  $instance_type_extra_specs = 'cpu_arch:{i386|x86_64}',
 ) {
 
   include nova::params
@@ -27,15 +31,5 @@ class nova::compute::baremetal (
   package { 'nova-baremetal':
     name   => $::nova::params::baremetal_package_name,
     ensure => present,
-  }
-
-  if ($power_manager) {
-    nova_config {
-      'baremetal/power_manager':    value => $power_manager
-    }
-  }  else {
-    nova_config {
-      'baremetal/power_manager':    ensure => absent
-    }
   }
 }
