@@ -36,7 +36,7 @@ class nova::params {
       $vncproxy_service_name        = 'openstack-nova-novncproxy'
       $spicehtml5proxy_service_name = 'openstack-nova-spicehtml5proxy'
       $volume_service_name          = 'openstack-nova-volume'
-      $baremetal_package_name       = 'openstack-nova-baremetal'
+      $baremetal_service_name       = 'openstack-nova-baremetal'
       # redhat specific config defaults
       $root_helper                  = 'sudo nova-rootwrap'
       $lock_path                    = '/var/lib/nova/tmp'
@@ -79,7 +79,7 @@ class nova::params {
       $volume_service_name          = 'nova-volume'
       $spicehtml5proxy_service_name = 'nova-spicehtml5proxy'
       $tgt_service_name             = 'tgt'
-      $baremetal_package_name       = 'nova-baremetal'
+      $baremetal_service_name       = 'nova-baremetal'
       # debian specific nova config
       $root_helper                  = 'sudo nova-rootwrap'
       $lock_path                    = '/var/lock/nova'
