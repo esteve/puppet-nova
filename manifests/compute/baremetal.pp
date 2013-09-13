@@ -33,11 +33,6 @@ class nova::compute::baremetal (
     'baremetal/instance_type_extra_specs': value => $instance_type_extra_specs;
   }
 
-  package { 'nova-baremetal':
-    name   => $::nova::params::baremetal_package_name,
-    ensure => present,
-  }
-
   nova::generic_service { 'baremetal':
     enabled        => $enabled,
     ensure_package => $ensure_package,
