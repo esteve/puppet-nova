@@ -11,6 +11,7 @@ class nova::compute::baremetal (
   $instance_type_extra_specs = 'cpu_arch:{i386|x86_64}',
   $enabled = true,
   $ensure_package = 'present',
+  $net_config_template = undef,
 ) {
 
   include nova::params
@@ -31,6 +32,14 @@ class nova::compute::baremetal (
     'baremetal/power_manager': value => $power_manager;
     'baremetal/driver': value => $driver;
     'baremetal/instance_type_extra_specs': value => $instance_type_extra_specs;
+  }
+
+  if ($net_config_template)  {
+    nova_config { 'baremetal/net_config_template':  value => $net_config_template
+    }
+  } else {
+    nova_config  { 'baremetal/net_config_template': ensure => absent
+    }
   }
 
   nova::generic_service { 'baremetal':
